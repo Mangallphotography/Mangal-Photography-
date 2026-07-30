@@ -199,5 +199,40 @@ galleryPhotos.forEach((photo, index) => {
   photo.style.cursor = 'pointer';
   photo.addEventListener('click', () => openLightbox(index));
 });
+</script> 
+  <div id="photoLightbox" class="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">×</button>
+  <button class="lightbox-prev" onclick="changePhoto(-1)">‹</button>
+  <img id="lightboxImage" src="" alt="Mangall Photography">
+  <button class="lightbox-next" onclick="changePhoto(1)">›</button>
+</div>
+
+<script>
+const galleryPhotos = document.querySelectorAll('.gallery .photo');
+let currentPhoto = 0;
+
+function openLightbox(index) {
+  currentPhoto = index;
+  const photo = galleryPhotos[currentPhoto];
+  const style = getComputedStyle(photo);
+  const imageUrl = style.backgroundImage.slice(5, -2);
+
+  document.getElementById('lightboxImage').src = imageUrl;
+  document.getElementById('photoLightbox').classList.add('show');
+}
+
+function closeLightbox() {
+  document.getElementById('photoLightbox').classList.remove('show');
+}
+
+function changePhoto(direction) {
+  currentPhoto = (currentPhoto + direction + galleryPhotos.length) % galleryPhotos.length;
+  openLightbox(currentPhoto);
+}
+
+galleryPhotos.forEach((photo, index) => {
+  photo.style.cursor = 'pointer';
+  photo.addEventListener('click', () => openLightbox(index));
+});
 </script>
 </body></html>
